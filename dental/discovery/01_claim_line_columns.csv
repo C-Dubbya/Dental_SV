@@ -1,0 +1,83 @@
+name,type,kind,null?,default,primary key,unique key,check,expression,comment,policy name,privacy domain,write default
+MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,"Surrogate(system-generated) Key that uniquely identifies a row within the Service Location Dimension.
+
+As a Type 2 Slowly Changing Dimension - there can be multiple rows in the dimension that represent different versions of the same Service Location.
+
+The Service Location Dim SK is the key that identifies each distinct version.  Only one version for each Service Location will be tagged as Current.",,,
+DE_LOAD_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem Load Process Event  Identifier for when the row was originally created,,,
+DE_LOAD_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,"Data Ecosystem Load Timestamp - identifies when this row was created within the Data Ecosystem
+",,,
+DE_UPDT_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem  Process Event  Identifier for when the row was most recently updated.,,,
+DE_UPDT_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,"Data Ecosystem Load Timestamp - identifies when this row was created within the Data Ecosystem
+",,,
+DE_ROW_HD,VARCHAR(64),COLUMN,N,,N,N,,,"Data Ecosystem Hash Difference Value: A hash of the columns within a row that can be compared to the current instance of the row to determine if the contents have changed.
+When the Hash VERSION is different a new row is required(new VERSION) if only the Hash DIFF changes - than and Update (SCD type 1) is in order.",,,
+DE_VERSION_HD,VARCHAR(64),COLUMN,N,,N,N,,,"Data Ecosystem Version Hash Difference Value: A hash of the columns within a row that can be compared to the current instance of the row to determine if a new version of a dimension is warranted(Type 2).
+When the Hash VERSION is different a new row is required(new VERSION) if only the Hash DIFF changes - than and Update (SCD type 1) is in order.",,,
+DE_CURRENT_ROW_IND,VARCHAR(1),COLUMN,N,,N,N,,,Identifies a  row as being the current active row for a given business key within the Data Ecosystem.,,,
+DE_DELETE_IND,VARCHAR(1),COLUMN,N,,N,N,,,Identifies a  row as deleted/deprecated.  This allows tracking as a virtual or soft delete process within the Data Ecosystem.,,,
+DE_ROW_BEGIN_DT,DATE,COLUMN,N,,N,N,,,The date the current row became active within the Data Ecosystem,,,
+DE_ROW_END_DT,DATE,COLUMN,N,,N,N,,,The date the current row became in-active within the Data Ecosystem.,,,
+MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,N,,N,N,,,Unique Identifier within The MMIS application for a Provider.,,,
+MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,N,,N,N,,,A unique identifier for the Provider Location as supplied by the data source.,,,
+SOURCE_ASSIGN_PROVIDER_ID,VARCHAR(50),COLUMN,N,,N,N,,,Unique Identifier of a Provider within the system of record for the specific row.  For MMIS Provider this is sourced from SAK_PROV column on T_PR_PROV.,,,
+PROVIDER_NM,VARCHAR(100),COLUMN,N,,N,N,,,The name of the provider when the provider is an organization. If the provider organization name exceeds 60 characters submit only the first 60 characters of the name. Provider Organization Name should be same as provider last name when provider is an individual.,,,
+PROVLOC_MEDICAID_ID,VARCHAR(50),COLUMN,Y,,N,N,,,Unique Identifier assigned by the State Medicaid Agency (CMA).  All providers serving Medicaid recipients/members must have a Medicaid ID.,,,
+NPI_ID,VARCHAR(50),COLUMN,Y,,N,N,,,"National Provider Identifier.
+
+The NPI is a unique identification number for covered health care providers. Covered health care providers and all health plans and health care clearinghouses must use the NPIs in the administrative and financial transactions adopted under HIPAA.
+The NPI is a 10-position, intelligence-free numeric identifier (10-digit number). This means that the numbers do not carry other information about healthcare providers, such as the state in which they live or their medical specialty. The NPI must be used in lieu of legacy provider identifiers in the HIPAA standards transactions.
+***cms.gov",,,
+PROVIDER_BUSINESS_NM,VARCHAR(100),COLUMN,Y,,N,N,,,"The providers name that is commonly used by the public when the ""doing-business-as"" name is different than the legal name. DBA is an abbreviation for ""doing business as."" Registering a DBA is required to operate a business under a name that differs from the companys legal name.  If DBA name is the same as the legal name, do not populate DBA name.",,,
+PROVIDER_GENDER_CD,VARCHAR(50),COLUMN,N,,N,N,,,Either individuals biological sex or their self-identified sex.,,,
+PROVIDER_GENDER_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the Gender associated to a Provider,,,
+PROVIDER_BIRTH_DT,DATE,COLUMN,Y,,N,N,,,An individuals date of birth.,,,
+PROVIDER_DEATH_DT,DATE,COLUMN,Y,,N,N,,,An individuals date of death.,,,
+PROVIDER_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"A code which indicates a provider's professional type. For Example:
+Physician, PA, etc
+",,,
+PROVIDER_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the type of Provider.,,,
+PROVIDER_CATEGORY_CD,VARCHAR(50),COLUMN,N,,N,N,,,"A code identifying if a Provider is a Facility, Group, Individual or Non Medical Provider
+",,,
+PROVIDER_CATEGORY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Description of code that identifies if a Provider is a Facility, Group, Individual or Non Medical Provider
+",,,
+PRIMARY_PROVIDER_SPECIALTY_CD,VARCHAR(50),COLUMN,N,,N,N,,,"A providers Specialty Code, a self-designated indication of the kind of medicine physicians, non-physician practitioners or other healthcare providers/suppliers practice",,,
+PRIMARY_PROVIDER_SPECIALTY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the code representing the specialty of a Provider.,,,
+PRIMARY_TAXONOMY_CD,VARCHAR(50),COLUMN,N,,N,N,,,A providers primary Taxonomy Code.,,,
+PRIMARY_TAXONOMY_DESC,VARCHAR(4000),COLUMN,N,,N,N,,,Description of a Provider Taxonomy code as provided by NUCC.,,,
+PRIMARY_TAXONOMY_EFFECT_DT,DATE,COLUMN,N,,N,N,,,The date this taxonomy became effective for the provider.,,,
+PRIMARY_TAXONOMY_END_DT,DATE,COLUMN,N,,N,N,,,The date this taxonomy was no longer in effect for the provider.,,,
+COUNTY_OF_SERVICE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Identifies the county serviced by this provider.
+
+***note this may not be an actual county within the state",,,
+COUNTY_OF_SERVICE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the county of service - this may not be an actual county.,,,
+PROVLOC_NM,VARCHAR(100),COLUMN,Y,,N,N,,,Servicing Address Name ,,,
+PROVLOC_ADDRESS_LINE1_TXT,VARCHAR(100),COLUMN,N,,N,N,,,Servicing Address Line 1 ,,,
+PROVLOC_ADDRESS_LINE2_TXT,VARCHAR(100),COLUMN,Y,,N,N,,,Servicing Address Line 2 ,,,
+PROVLOC_CITY_NM,VARCHAR(100),COLUMN,N,,N,N,,,Servicing Address City ,,,
+PROVLOC_STATE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Servicing Address State ,,,
+PROVLOC_COUNTY_NM,VARCHAR(100),COLUMN,N,,N,N,,,Name of the County for the Providers address.,,,
+PROVLOC_POSTAL_CD,VARCHAR(20),COLUMN,N,,N,N,,,Servicing Address Zip 5 Code,,,
+PROVLOC_COUNTRY_CD,VARCHAR(50),COLUMN,N,,N,N,,,Servicing Address Country Code,,,
+PROVLOC_LATITUDE_NBR,"NUMBER(11,6)",COLUMN,Y,,N,N,,,"Latitude is a measurement of distance from the equator, expressed in degrees north or south. The equator is 0 degrees latitude, and the North and South Poles are 90 Degrees latitude",,,
+PROVLOC_LONGITUDE_NBR,"NUMBER(11,6)",COLUMN,Y,,N,N,,,Longitude is the measurement of how far east or west a location is from the prime meridian.,,,
+PROVLOC_GIS_QUALITY_NBR,"NUMBER(38,0)",COLUMN,Y,,N,N,,,Geographic Information System Quality Score - number represents the quality of the related Latitude / Longitude Numbers,,,
+PROVLOC_PHONE_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Servicing Address Phone Number ,,,
+PROVLOC_FAX_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Servicing Address Fax Number ,,,
+PROVLOC_EMAIL_ADDRESS_TXT,VARCHAR(100),COLUMN,Y,,N,N,,,Servicing Address Email Address ,,,
+TAX_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that identifies the type of Tax Id that is Provided
+
+F = FEIN
+S = SSN",,,
+TAX_ID_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Description of the Tax_Id_Type_Cd
+
+This will identify a Tax Id as an SSN or FEIN",,,
+LOCATION_TAX_ID,VARCHAR(50),COLUMN,Y,,N,N,,,"The Tax Id associated to a Provider Service Location.
+
+This may be a Social Security Number(SSN) or Federal Employer Identification Number (FEIN).",,,
+LEVEL_OF_CARE_CD,VARCHAR(50),COLUMN,N,,N,N,,,A code that identifies the level of care.,,,
+LEVEL_OF_CARE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the level of care identified in the Level of Care Code.,,,
+LEVEL_OF_CARE_EFFECT_DT,DATE,COLUMN,N,,N,N,,,The date the corresponding level of care went into effect.,,,
+LEVEL_OF_CARE_END_DT,DATE,COLUMN,N,,N,N,,,The date the level of care ended.,,,
+TOTAL_BED_CNT,"NUMBER(38,0)",COLUMN,N,,N,N,,,The total number of beds within a location/facility,,,
+MEDICAID_BED_CNT,"NUMBER(38,0)",COLUMN,N,,N,N,,,A count of beds within a location/facility available for Medicaid Beneficiaries,,,

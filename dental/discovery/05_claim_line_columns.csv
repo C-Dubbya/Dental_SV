@@ -1,0 +1,393 @@
+name,type,kind,null?,default,primary key,unique key,check,expression,comment,policy name,privacy domain,write default
+CLAIM_ICN_NBR,VARCHAR(50),COLUMN,N,,N,N,,,Internal Control Number (ICN) is a 13-digit number that is assigned to each claim received by TennCare. ICN number is assigned by the insurance payer to every medical claim.,,,
+CLAIM_LINE_NBR,"NUMBER(38,0)",COLUMN,N,,N,N,,,The number that identifies a detail line of a Claim.,,,
+DE_LOAD_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem Load Process Event Identifier for when the row was originally created.,,,
+DE_LOAD_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,Data Ecosystem Load Process Start Timestamp for when the Row was originally created.,,,
+DE_UPDT_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem Load Process Timestamp for when the Row was updated.,,,
+DE_UPDT_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,"Data Ecosystem Load Timestamp - identifies when this row was created within the Data Ecosystem
+",,,
+DE_ROW_HD,VARCHAR(64),COLUMN,N,,N,N,,,Data Ecosystem Hash Difference Value: A hash of the columns within a row that can be compared to a version of the row to determine if the contents have changed.,,,
+DE_VERSION_HD,VARCHAR(64),COLUMN,N,,N,N,,,"Data Ecosystem Version Hash Difference Value: A hash of the columns within a row that can be compared to the current instance of the row to determine if a new version of a dimension is warranted(Type 2).
+When the Hash VERSION is different a new row is required(new VERSION) if only the Hash DIFF changes - than and Update (SCD type 1) is in order.",,,
+DE_CURRENT_ROW_IND,VARCHAR(1),COLUMN,N,,N,N,,,"Data Ecosystem Current Row Indicator indicates that the associated row is the only ‘current’ row for the given business key. There can be only one record with the ""Y"" (yes) value for the Current Record Indicator for a given business or natural key within the record. ",,,
+DE_DELETE_IND,VARCHAR(1),COLUMN,N,,N,N,,,Data Ecosystem Delete Indicator indicates if the row should be treated as a deleted row within Data Ecosystem.  Row is retained for audit purposes.,,,
+DE_ROW_BEGIN_DT,DATE,COLUMN,N,,N,N,,,Data Ecosystem Row Begin Timestamp indicates when the date and time a row became active within the Data Ecosystem.,,,
+DE_ROW_END_DT,DATE,COLUMN,N,,N,N,,,Data Ecosystem Row End Date indicates the date a row became inactive within the Data Ecosystem.,,,
+DE_SENSITIVE_DATA_IND,VARIANT,COLUMN,Y,,N,N,,,Indicates the claim contains information related to Substance Use Disorder (SUD) diagnosis or treatment. This data is considered sensitive and is restricted from general access to only users authorized to view SUD data.,,,
+CLAIM_MCC_ICN_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Managed Care Organization Internal Control Number (MCC ICN) is a 13-digit number assigned by the MCO.,,,
+CLAIM_PAID_DT,DATE,COLUMN,Y,,N,N,,,Date that financial completes the transaction.,,,
+CLAIM_CATEGORY_CD,VARCHAR(50),COLUMN,N,,N,N,,,"The code that identifies the type of claim.  This is a derived data element meant to categorize the claim type at the highest level:
+e.g.
+PROF = Professional
+DNTL = Dental
+PHRM =  Pharmacy
+INST = Institutional",,,
+CLAIM_CATEGORY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"The text that describes a type or category of Claim.
+e.g.
+PROF = Professional
+DNTL = Dental
+PHRM =  Pharmacy
+INST = Institutional",,,
+CLAIM_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the type of claim record. Physician claims are type M=medical or B=crossover Part B.,,,
+CLAIM_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes a type of claim.,,,
+CLAIM_STATUS_CD,VARCHAR(50),COLUMN,N,,N,N,,,"The code that identifies the status of a Claim. e.g. ""P"" - paid, ""D"" - denied, ""S"" - Suspended, and ""R"" - Resubmitted.",,,
+CLAIM_STATUS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the status of a Claim.,,,
+BUDGET_YR,VARCHAR(4),COLUMN,Y,,N,N,,,The State fiscal year of the budget from which the funds were drawn.,,,
+BILL_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Billing Provider Location.,,,
+BILL_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Billing Provider. This the TennCare assigned Medicaid Id,,,
+BILL_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Billing Provider Location.  This ID must be used in conjunction with the MMIS Billing Provider ID to be unique.,,,
+BILL_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the Provider Dimension table for the Billing Provider ID.,,,
+BILL_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the Billing Provider. This could be Medicaid ID or NPI ID.,,,
+BILL_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of billing provider ID (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+BILL_PROVIDER_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies a type of Provider.,,,
+BILL_PROVIDER_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes a type of Provider.,,,
+BILL_PROVIDER_SPECIALTY_CD,VARCHAR(50),COLUMN,N,,N,N,,,This field contains the provider specialty which is the main focus of the providers practice. Each provider type must have a primary specialty and the primary specialty must be one of the providers existing specialties.,,,
+BILL_PROVIDER_SPECIALTY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes a provider specialty code that was submitted on the claim.,,,
+MCO_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MCO Dimension table for the Managed Care Organization ID.,,,
+MCO_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique Business identifier of the Managed Care Organization.,,,
+RENDER_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Rendering Provider Location.,,,
+RENDER_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Rendering Provider. This the TennCare assigned Medicaid Id,,,
+RENDER_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Rendering Provider Location.  This ID must be used in conjunction with the MMIS Rendering Provider ID to be unique.,,,
+RENDER_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the Provider Dimension table for the Rendering Provider ID.,,,
+RENDER_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique BUSINESS identifier of the RENDERING Provider. This could be Medicaid ID or NPI ID.,,,
+RENDER_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of billing provider ID (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+ATTEND_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Attending Provider Location.,,,
+ATTEND_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Attending Provider. This the TennCare assigned Medicaid Id,,,
+ATTEND_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Attending Provider Location.  This ID must be used in conjunction with the MMIS Attending Provider ID to be unique.,,,
+ATTEND_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the Provider Dimension table for the Attending Provider ID.,,,
+ATTEND_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique  identifier of the Attending Provider. This could be Medicaid ID or NPI ID.,,,
+ATTEND_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of attending provider ID (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+REFER_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Referring Provider Location.,,,
+REFER_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Referring Provider. This the TennCare assigned Medicaid Id,,,
+REFER_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Rendering Provider Location.  This ID must be used in conjunction with the MMIS Rendering Provider ID to be unique.,,,
+REFER_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the Provider Dimension table for the first Referring Provider ID.,,,
+REFER_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique Business  identifier of the REFERRING Provider.,,,
+REFER_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of referring provider ID (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+FACILITY_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Facility Provider Location.,,,
+FACILITY_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Facility Provider. This the TennCare assigned Medicaid Id,,,
+FACILITY_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Facility Provider Location.  This ID must be used in conjunction with the MMIS Facility Provider ID to be unique.,,,
+FACILITY_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the  in MMIS_PROVLOC_DIM table for the Facility Provider ID.,,,
+FACILITY_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier of the Facility.,,,
+FACILITY_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of provider ID for the facility (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+PRESCRIBE_MMIS_PROVLOC_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the MMIS Provider Location Dimension to identify the MMIS Prescribing Provider Location.,,,
+PRESCRIBE_MMIS_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the MMIS Prescribing Provider. This the TennCare assigned Medicaid Id,,,
+PRESCRIBE_MMIS_PROVLOC_ID,VARCHAR(50),COLUMN,Y,,N,N,,,An identifier for the Prescribing Provider Location.  This ID must be used in conjunction with the MMIS Prescribing Provider ID to be unique.,,,
+PRESCRIBE_PROVIDER_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in MMIS_PROVLOC_DIM,,,
+PRESCRIBE_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the Prescribing Provider.,,,
+PRESCRIBE_PROVIDER_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code that indicates the type of Provider ID (i.e. Medicaid ID, NPI ID, DEA Number).",,,
+SUBMIT_PRESCRIBE_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The unique identifier for the Submitting Prescribing Provider.,,,
+BENEFICIARY_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,System Generated Key to uniquely identify a row in the Beneficiary Dimension table.,,,
+BENEFICIARY_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code that indicates the type of Beneficiary ID (i.e. MEDICAID).,,,
+BENEFICIARY_ID,VARCHAR(50),COLUMN,Y,,N,N,,,The Medicaid ID of the Client.,,,
+BENEFICIARY_BIRTH_DT,DATE,COLUMN,Y,,N,N,,,The birth date of the Client - as reflected in the client dimension as claim is loaded,,,
+BENEFICIARY_AGE_YRS,"NUMBER(38,0)",COLUMN,Y,,N,N,,,The members age is  base on the date of birth sourced from BENEFICIARY_DIM. Years are calculated using the claim line first date of service. Fractions of a year are rounded down.,,,
+BENEFICIARY_AGE_MTHS,"NUMBER(38,0)",COLUMN,Y,,N,N,,,The members age in months is  base on the date of birth sourced from BENEFICIARY_DIM. Months are calculated using the claim line first date of service. Fractions of a month are rounded down.,,,
+PAYMENT_LEVEL_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code representing the level of the associated payment (CLM vs LINE),,,
+PAYMENT_LEVEL_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Description of the code representing the payment Level (Claim Level vs Claim Line Level)
+",,,
+REGION_CD,VARCHAR(50),COLUMN,N,,N,N,,,This is the MMIS system region code the claim processed under. The field id derived from the first 2 characters of the CLAIM_ICN_NBR. ,,,
+REGION_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the region code of the claim.,,,
+CLAIM_VOID_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates if this claim adjustment is a void of the previously paid claim.,,,
+CLAIM_DSNP_IND,VARCHAR(1),COLUMN,N,,N,N,,,"Indicates that the claim is related to a Dual Special Needs(D-SNP) plan.
+
+D-SNP is a type of health insurance plan. It for people who have both Medicare and Medicaid, or dual-eligible.
+
+Dual Special Needs plans are for people who could use more help. That may be because of income, disabilities, age and/or health conditions. Dual Special Needs plans are a type of Medicare Advantage plan.
+
+TennCare identifies DSNP  claims based on the Submitter.  If the last 3 digits of a Submitter is in the list below - claim is tagged as DSNP.
+(AGC, CHI, HEA, UHC, VSH, WHP)",,,
+ENCOUNTER_IND,VARCHAR(1),COLUMN,N,,N,N,,,This field indicates if the claim is an encounter. Valid values Y or N.,,,
+LAST_CLAIM_IND,VARCHAR(1),COLUMN,N,,N,N,,,Used to signify that the associated claim is the most recent for this specific service/claim.  If a claim is adjusted this will be set to N (No).  A new claim or a new adjustment to a claim will be added to table with this flag set to Y.,,,
+CLAIM_ADJUSTED_DT,DATE,COLUMN,Y,,N,N,,,"When a claim is adjusted, the paid date of the Adjusting claim will be placed on the claim being Adjusted  This will signify when the claim was no longer the most recent claim.",,,
+ADJUSTMENT_ICN_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,The ICN Number of the Adjustment Claim that is replacing this claim.,,,
+ADJUSTMENT_REASON_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the reason that a claim was adjusted.,,,
+ADJUSTMENT_REASON_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the reason that a claim was adjusted.,,,
+CLAIM_BILL_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount requested by provider for services rendered.,,,
+CLAIM_NET_BILL_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount remaining on a claim after payment has been made by all other sources (TPL).,,,
+CLAIM_TPL_SUBMIT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount of TPL entered on the claim.,,,
+CLAIM_TPL_APPLIED_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount of TPL applied to the claim during claims adjudication.,,,
+CLAIM_ALLOW_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount reimbursed to provider.,,,
+CLAIM_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount sent to a provider for payment for services rendered to a Client.,,,
+CLAIM_COPAY_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount paid by Client for services rendered.,,,
+CLAIM_REIMBURSE_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount reimbursed to provider.,,,
+CLAIM_COINS_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to a per prescription coinsurance.
+",,,
+CLAIM_DEDUCT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from a patient that is included in  Patient Pay Amount  that is applied to a periodic deductible.
+",,,
+CLAIM_PATIENT_LIABILITY_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount recipient is responsible to pay for services rendered.
+",,,
+ENCOUNTER_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The calculated amount paid for the encounter using encounter amount allowed minus patient resources such as deductions and TPL payments using the State service line reduction methodology.,,,
+MEDICARE_PAID_DT,DATE,COLUMN,Y,,N,N,,,The date when Medicare made payment for a claim.,,,
+MEDICARE_ALLOW_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount allowed by Medicare for a given service.,,,
+MEDICARE_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount Medicare paid for the service.,,,
+MEDICARE_DEDUCT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"The amount patient pay for covered health care services before Medicare starts to pay.
+",,,
+MEDICARE_COINS_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The coinsurance amount based on Medicare policy,,,
+MEDICARE_BLOOD_DEDUCT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount the patient must pay for blood purchased before Medicare starts to pay.,,,
+MEDICARE_COINS_DAYS_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,The number of coinsurance days based on Medicare policy,,,
+MEDICARE_LTR_DAYS_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,The life time reserved days count based on Medicare policy.,,,
+PROVIDER_SERVICE_COUNTY_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Dimension Surrogate Key/System Generated Key that identifies a specific row in the County_Dim table and identifies the Providers Service County.,,,
+PROVIDER_SERVICE_COUNTY_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies a COUNTY.,,,
+PROVIDER_SERVICE_COUNTY_NM,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes or names a COUNTY.,,,
+CLAIM_BILL_DT,DATE,COLUMN,Y,,N,N,,,Date on which the provider or billing service prepared the claim form to be submitted.,,,
+CLAIM_ADJUDIC_DT,DATE,COLUMN,Y,,N,N,,,"Date the claim or adjustment is processed.
+
+",,,
+CLAIM_LINE_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,"Total number of details associated with the claim header.
+",,,
+CLAIM_FIRST_SERVICE_DT,DATE,COLUMN,Y,,N,N,,,Date on a claim representing the first date a service was rendered for a beneficiary.,,,
+CLAIM_LAST_SERVICE_DT,DATE,COLUMN,Y,,N,N,,,Date on a claim representing the last date a service was rendered for a patient.,,,
+RECEIPT_DT,DATE,COLUMN,Y,,N,N,,,"Date the claim was received.
+",,,
+REL_CAUSE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Signifies if there is a related cause such as an accident.
+
+From 837 - valid values include
+AA=Auto Accident
+EM=Employment
+OA=Other Accident",,,
+REL_CAUSE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text description of the related cause code.,,,
+ELECTRONIC_CLAIM_IND,VARCHAR(1),COLUMN,N,,N,N,,,"This field is keyed to indicate if the provider is a possible electronic biller.
+",,,
+PATIENT_ACCOUNT_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Identification for a Client assigned by a provider and used in their system. This number is not required for processing (information only).,,,
+MEDICAL_RECORD_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,"Medical Record Number.
+",,,
+ADMIT_SOURCE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The source of admission code that is found in block 20 of the UB92 claim form for inpatient and LTC claims.,,,
+ADMIT_SOURCE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,A description of the source of admission code that is found in block 20 of the UB92 claim form for inpatient and LTC claims.,,,
+ADMIT_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code which indicates the priority of the admission for inpatient or outpatient care.,,,
+ADMIT_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,A description of the code which indicates the priority of the admission for inpatient or outpatient care.,,,
+ADMISSION_DT,DATE,COLUMN,Y,,N,N,,,The date on which the Beneficiary was admitted.,,,
+ADMISSION_TIME,VARCHAR(4),COLUMN,Y,,N,N,,,"ADMIT TIME - is the hour and minute during which the patient was admitted for inpatient or outpatient care.
+",,,
+DISCHARGE_DT,DATE,COLUMN,Y,,N,N,,,The Date a patient was discharged from a facility. This is derived from Last service date and Patient Disposition.,,,
+DISCHARGE_TIME,VARCHAR(4),COLUMN,Y,,N,N,,,This is the Discharge Hour in format HHMM.,,,
+TYPE_OF_BILL_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Contains the type of bill field from the UB-92 field comprised of type of facility, class, and frequency ",,,
+TYPE_OF_BILL_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Describes the type of bill field from the UB-92 field comprised of type of facility, class, and frequency ",,,
+CLAIM_FREQUENCY_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Claims Frequency Code.  Code specifying the reason for claim submission.
+
+Code specifying the frequency of the claim; this is the third position of
+the Uniform Billing Claim Form Bill Type.
+",,,
+CLAIM_FREQUENCY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the claim frequency.,,,
+PATIENT_STATUS_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code which indicates the status of the Client as of the ending service date of the period covered on a UB92 claim.,,,
+PATIENT_STATUS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the patient status of the Client.,,,
+CLAIM_DAYS_COVER_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,"Indicates the number of covered days for the statement period of the claim.
+",,,
+CLAIM_DAYS_NON_COVER_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,"Indicates the number of days not covered for the statement period of the claim.
+",,,
+ED_VISIT_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates whether the claim is related to an Emergency Department Visit.,,,
+CLAIM_DIAGNOSIS_1_CD,VARCHAR(50),COLUMN,N,,N,N,,,The first diagnosis code submitted on the claim (sequence number = 01).,,,
+CLAIM_DIAGNOSIS_1_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+CLAIM_DIAGNOSIS_2_CD,VARCHAR(50),COLUMN,N,,N,N,,,The second diagnosis code submitted on the claim (sequence number = 02).,,,
+CLAIM_DIAGNOSIS_2_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+CLAIM_DIAGNOSIS_3_CD,VARCHAR(50),COLUMN,N,,N,N,,,The third diagnosis code submitted on the claim (sequence number = 03).,,,
+CLAIM_DIAGNOSIS_3_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+CLAIM_DIAGNOSIS_4_CD,VARCHAR(50),COLUMN,N,,N,N,,,The fourth diagnosis code submitted on the claim (sequence number = 04).,,,
+CLAIM_DIAGNOSIS_4_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+PRESCRIPTION_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Number assigned by a pharmacy to identify the drug dispensed to a Client.,,,
+PRESCRIBE_DT,DATE,COLUMN,Y,,N,N,,,Date physician prescribed drug for a Client.,,,
+PRESCRIBE_QTY,"NUMBER(30,7)",COLUMN,Y,,N,N,,,"The prescribed quantity expressed in metric decimal units.
+",,,
+DRUG_DAYS_SUPPLY_QTY,"NUMBER(30,7)",COLUMN,Y,,N,N,,,Number of days a prescribed drug should last a Client.,,,
+DISPENSE_FEE_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,This is the amount that the provider receives for dispensing a prescription drug.,,,
+USUAL_AND_CUSTOMARY_CHARGE_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Usual and customary charge submitted by the provider.,,,
+DUR_INTERVENE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Record of whether a drug utilization and review intervention code was given in response to a ProDUR alert. The intervention code indicates whom the pharmacist consulted with (nobody, physician, Client) to decide whether to fill the prescription.",,,
+DUR_INTERVENE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the Drug Utilization Review (DUR) Intervention Code.,,,
+DUR_OUTCOME_CD,VARCHAR(50),COLUMN,N,,N,N,,,"The outcome code returned from the provider in response to a Prospective Drug Utilization Review alert. This code indicates whether the prescription was filled as is, changed, or not filled.",,,
+DUR_OUTCOME_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the  Drug Utilization Review (DUR) I Outcome code.,,,
+REFILL_SEQUENCE_NBR,"NUMBER(38,0)",COLUMN,Y,,N,N,,,"This is the refill number for the prescribed drug.  The first time the prescription is filled, this attribute will be 0. For each subsequent refill this attribute will be incremented by 1.",,,
+AUTH_REFILL_CNT,"NUMBER(38,0)",COLUMN,Y,,N,N,,,"Number of refills authorized by the prescriber.
+",,,
+BRAND_MEDICAL_NECESSITY_CD,VARCHAR(50),COLUMN,N,,N,N,,,"This field indicates the reason, if any, that a brand name drug was dispensed.  (Note 10 codes used, no lookup)
+",,,
+BRAND_MEDICAL_NECESSITY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the Brand Medical Necessity code for this claim.,,,
+SPECIAL_PACK_CD,VARCHAR(50),COLUMN,N,,N,N,,," Code indicating the type of dispensing dose.  (Note: 10 codes, no lookup!)
+",,,
+SPECIAL_PACK_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the special pack code.,,,
+PRIOR_AUTH_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,"Unique identifier submitted by the provider to identify a prior authorization.
+",,,
+CLAIM_AWP_UNIT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Average Wholesale Price per unit for the drug as defined by processor.
+",,,
+CLAIM_BRAND_SELECT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient s selection of a Brand product.
+",,,
+COVERAGE_GAP_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient being in the coverage gap (for example Medicare Part D Coverage Gap (donut hole)).
+",,,
+FEDERAL_UPPER_LIMIT_UNIT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Federal Upper Limit Unit Price as defined by processor.
+",,,
+MAC_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Indicates the unit maximum allowable cost price for the product/service as defined by the processor.
+",,,
+FLAT_TAX_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Flat sales tax paid which is included in the  Total Amount Paid
+",,,
+INCENTIVE_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount represents the contractually agreed upon incentive fee paid for specific services rendered. Amount is included in the  Total Amount Paid
+",,,
+NETWORK_SELECT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient s provider network selection.
+",,,
+NON_PREFER_BRAND_SELECT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient s selection of a non preferred brand product.
+",,,
+NON_PREFER_PRODUCT_SELECT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient s selection of a non-preferred product.
+",,,
+PRODUCT_SELECT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to the patient s selection of drug product.
+",,,
+SALE_TAX_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount to be collected from the patient that is included in  Patient Pay Amount  that is due to sales tax paid.
+",,,
+ALL_SOURCE_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The dollars amount paid from all payer(s).,,,
+NURSE_HOME_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates whether the drug was dispensed for a Client who resides in a nursing home facility.,,,
+PREGNANCY_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates whether service is related to condition of being pregnant.,,,
+PAYMENT_ID,VARCHAR(50),COLUMN,Y,,N,N,,,"Unique identifier assigned by the sender to reference individual pharmacy and member reimbursement (e.g., check or EFT trace number).
+",,,
+MAC_REDUCE_IND,VARCHAR(1),COLUMN,N,,N,N,,,"Indicates if a claim payment was reduced due to a MAC (Maximum Allowable Cost) program.
+",,,
+SERVICE_LEVEL_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code to identify the type of service the provider rendered.,,,
+SERVICE_LEVEL_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the Service Level Code applied to this claim.,,,
+PARTIAL_REFILL_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code to identify the quantity dispensed is a partial fill or the completion of a partial fill. Used only in situations where inventory shortages do not allow the full quantity to be dispensed.,,,
+PARTIAL_REFILL_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the partial refill code.,,,
+LINE_FIRST_SERVICE_DT,DATE,COLUMN,Y,,N,N,,,The first date on which services are rendered for a Client.,,,
+LINE_LAST_SERVICE_DT,DATE,COLUMN,Y,,N,N,,,Date on which services were last performed for a Client.,,,
+LINE_STATUS_CD,VARCHAR(50),COLUMN,N,,N,N,,,"The code that identifies the status of Line Item. e.g. ""P"" - paid, ""D"" - denied, ""S"" - Suspended, and ""R"" - Resubmitted.",,,
+LINE_STATUS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the status of the Line Item.,,,
+LINE_BILL_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"Amount of money requested for payment by a provider for services rendered to a recipient.
+",,,
+LINE_ALLOW_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount approved to pay for services provided to a recipient.,,,
+LINE_ENCOUNTER_ALLOW_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The calculated allowed amount for an encounter service using the States medical and payment policy.,,,
+LINE_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"The amount of money paid for the service line of the encounter/claim.  This is reduced by patient resources such as deductions and TPL payments using the Payer reduction methodology.
+",,,
+LINE_ENCOUNTER_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The calculated amount paid for the encounter using encounter amount allowed minus patient resources such as deductions and TPL payments using the State service line reduction methodology.,,,
+LINE_CO_PAY_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Co-pay amount for a service line.,,,
+LINE_TPL_SUBMIT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"This is the total amount paid by this payer for this detail. This is a derived field computed from the CAS segments on the 837 as follows. The total Provider Adjustment Amt (DA3-25.0) for a detail equals the sum of all the adjustment amounts inCAS03, 06, 09, 12, 15, and 18. Subtracting this amount form detail billed amounts yields the detail TPL amount.
+",,,
+LINE_TPL_APPLIED_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount of TPL applied to the claim line during claims adjudication.,,,
+LINE_NON_COVER_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"NON COVERED AMOUNT - is Service Line Non-Covered Charge Amount, Line Item Denied Charge or Non-Covered Charge Amount.",,,
+BILL_QTY,"NUMBER(30,7)",COLUMN,Y,,N,N,,,"Number of units of service that were provided.
+",,,
+ALLOW_QTY,"NUMBER(30,7)",COLUMN,Y,,N,N,,,"Number of units of service that will be paid for.
+",,,
+LINE_MEDICARE_PAID_DT,DATE,COLUMN,Y,,N,N,,,The date when Medicare made payment for a claim.,,,
+LINE_MEDICARE_ALLOW_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount allowed by Medicare for a given service.,,,
+LINE_MEDICARE_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The amount Medicare paid for the service.,,,
+LINE_MEDICARE_COINS_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,The coinsurance amount based on Medicare policy,,,
+LINE_MEDICARE_DEDUCT_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,"The amount patient pay for covered health care services before Medicare starts to pay.
+",,,
+LINE_MEDICARE_PSYCHIATRIC_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount Medicare has determined the recipient must pay for psychiatric services received.,,,
+POS_CD,VARCHAR(50),COLUMN,N,,N,N,,,Location where service was rendered.,,,
+POS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the type of location where service was rendered.,,,
+CONTRACT_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code to identify the type of contract under which a claim is tied to.
+
+ F  - Fee for service encounter
+ C  - Capitated payment encounter ",,,
+CONTRACT_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the type of contract under which a claim is tied to.,,,
+EMERGENCY_CD,VARCHAR(50),COLUMN,N,,N,N,,,Indicates whether the service was provided as result of emergency situation.,,,
+EMERGENCY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the type of emergency under which a claim is tied to.,,,
+EPSDT_FP_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code to identify Child Health Check Up (CHCUP - formerly EPSDT) or Family planning information.  E=patient referred as part of CHCUP screening, V=patient refused referral/available not used, U=patient not referred/not used, 2=under treatment, T=new services requested, F=services related to pregnancy or family planning",,,
+EPSDT_FP_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the EPSDT/ Family Planning code.,,,
+LINE_PRICE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Indicates which pricing methodology was applied to the procedure provided.,,,
+LINE_PRICE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the type of pricing applied to the claim line.,,,
+LINE_DIAGNOSIS_1_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+LINE_DIAGNOSIS_1_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the first medical condition or diagnosis related to the claim line for professional claims.,,,
+LINE_DIAGNOSIS_1_SEQUENCE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Indicates whether diagnosis is primary, secondary, third, fourth, fifth, sixth, seventh, eighth, ninth, admitting, or emergency in the header. Values are 1 - 9, A, or E. The admitting diagnosis is sequence A and the emergency diagnosis is sequence E.",,,
+LINE_DIAGNOSIS_2_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+LINE_DIAGNOSIS_2_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the second medical condition or diagnosis related to the claim line for professional claims.,,,
+LINE_DIAGNOSIS_2_SEQUENCE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Indicates whether diagnosis is primary, secondary, third, fourth, fifth, sixth, seventh, eighth, ninth, admitting, or emergency in the header. Values are 1 - 9, A, or E. The admitting diagnosis is sequence A and the emergency diagnosis is sequence E.",,,
+LINE_DIAGNOSIS_3_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+LINE_DIAGNOSIS_3_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the third medical condition or diagnosis related to the claim line for professional claims.,,,
+LINE_DIAGNOSIS_3_SEQUENCE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Indicates whether diagnosis is primary, secondary, third, fourth, fifth, sixth, seventh, eighth, ninth, admitting, or emergency in the header. Values are 1 - 9, A, or E. The admitting diagnosis is sequence A and the emergency diagnosis is sequence E.",,,
+LINE_DIAGNOSIS_4_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Diagnosis Dimension table. This identifies a unique record on the table.,,,
+LINE_DIAGNOSIS_4_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the fourth medical condition or diagnosis related to the claim line for professional claims.,,,
+LINE_DIAGNOSIS_4_SEQUENCE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Indicates whether diagnosis is primary, secondary, third, fourth, fifth, sixth, seventh, eighth, ninth, admitting, or emergency in the header. Values are 1 - 9, A, or E. The admitting diagnosis is sequence A and the emergency diagnosis is sequence E.",,,
+PROCEDURE_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Procedure Dimension table. This identifies a unique record on the table.,,,
+PROCEDURE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The national standard CPT or HCPCS code that identifies a medical procedure.,,,
+PROCEDURE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The national standard text description for a CPT or HCPCS procedure code.,,,
+PROCEDURE_MODIFIER_1_CD,VARCHAR(50),COLUMN,N,,N,N,,,First modifier code used to further define a procedure provided.,,,
+PROCEDURE_MODIFIER_1_HCPCS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the 1st  HCPCS procedure modifier.,,,
+PROCEDURE_MODIFIER_1_TRANSPORT_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"The description of the 1st  procedure modifier, populated if the modifier is related to transportation services.",,,
+PROCEDURE_MODIFIER_2_CD,VARCHAR(50),COLUMN,N,,N,N,,,Second modifier code used to further define a procedure provided.,,,
+PROCEDURE_MODIFIER_2_HCPCS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the 2nd HCPCS procedure modifier.,,,
+PROCEDURE_MODIFIER_2_TRANSPORT_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"The description of the 2nd  procedure modifier, populated if the modifier is related to transportation services.",,,
+PROCEDURE_MODIFIER_3_CD,VARCHAR(50),COLUMN,N,,N,N,,,Third modifier code used to further define a procedure provided.,,,
+PROCEDURE_MODIFIER_3_HCPCS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the 3rd  HCPCS procedure modifier.,,,
+PROCEDURE_MODIFIER_3_TRANSPORT_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"The description of the 3rd  procedure modifier, populated if the modifier is related to transportation services.",,,
+PROCEDURE_MODIFIER_4_CD,VARCHAR(50),COLUMN,N,,N,N,,,Fourth modifier code used to further define a procedure provided.,,,
+PROCEDURE_MODIFIER_4_HCPCS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the 4th HCPCS procedure modifier.,,,
+PROCEDURE_MODIFIER_4_TRANSPORT_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"The description of the 4th  procedure modifier, populated if the modifier is related to transportation services.",,,
+REVENUE_CD,VARCHAR(50),COLUMN,N,,N,N,,,This identifies a specific accommodation or ancillary service. Revenue codes are determined by HCFA.,,,
+REVENUE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,This describes a specific accommodation or ancillary service.,,,
+TOOTH_NBR_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the tooth on which a particular service was performed.,,,
+TOOTH_NBR_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the tooth on which a particular service was performed.,,,
+TOOTH_QUADRANT_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies quadrant of the mouth that the procedure on the claim is related to.,,,
+TOOTH_QUADRANT_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the quadrant of the mouth that the procedure on the claim is related to.,,,
+DRUG_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,The system-generated identifier for a unique row in this table.,,,
+NDC_CD,VARCHAR(50),COLUMN,N,,N,N,,,The National Drug Code used to identify a drug.,,,
+NDC_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,National Drug Code description.,,,
+NDC_UOM_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Code to identify the way in which a drug is measured (e.g. by MG, ML, PPM, etc.).",,,
+AID_CATEGORY_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,The system-generated identifier for a unique row in the Aid Category Dimension table.,,,
+AID_CATEGORY_CD,VARCHAR(50),COLUMN,N,,N,N,,,Identifies the type of aid for which a Beneficiary eligible.,,,
+AID_CATEGORY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the type of aid for which a Beneficiary is eligible.,,,
+HEALTH_PLAN_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,The system-generated identifier for a unique row in the Health Plan Dimension table.,,,
+HEALTH_PLAN_ID,VARCHAR(50),COLUMN,N,,N,N,,,A code to identify the medical assistance program associated with a service line.,,,
+HEALTH_PROGRAM_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Health Program: a program or activity administered or funded by a state agency to provide health care services, research, education, or goods.",,,
+SOURCE_ASSIGN_CLAIM_ID,VARCHAR(50),COLUMN,N,,N,N,,,"Source system assigned key.
+
+This a unique identifier as assigned by the Adjudication System(MMIS).
+
+For TennCare this is the SAK_CLAIM as assigned in interChange.",,,
+SUBMIT_ID,VARCHAR(50),COLUMN,Y,,N,N,,,"Unique identifier for the submitter on all electronic claims or encounters.
+",,,
+TOOTH_SURFACE_1_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the first tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_1_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the first tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_2_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the second tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_2_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the second tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_3_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the third tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_3_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the third tooth on which a particular service was performed.,,,
+TOOTH_SURFACE_4_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the fourth tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_4_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the fourth tooth on which a particular service was performed.,,,
+TOOTH_SURFACE_5_CD,VARCHAR(50),COLUMN,N,,N,N,,,The code that identifies the fifth tooth surface on which a particular service was performed.,,,
+TOOTH_SURFACE_5_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text that describes the fifth tooth on which a particular service was performed.,,,
+NCPDP_FILE_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Indicates whether this is a replacement file, file updates or a file delete.",,,
+NCPDP_FILE_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Description of the file type (e.g. replacement, update, delete).",,,
+NCPDP_ACTION_CD,VARCHAR(50),COLUMN,N,,N,N,,,NCPDP Action to be taken on the record.,,,
+NCPDP_ACTION_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the action to be taken on the record.,,,
+NCPDP_PROVIDER_ID,VARCHAR(50),COLUMN,Y,,N,N,,,ID assigned to a pharmacy or provider.,,,
+PHARMACY_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The type of pharmacy dispensing the product.,,,
+PHARMACY_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the type of pharmacy dispensing the product.,,,
+PHARMACY_CLASS_CD,VARCHAR(50),COLUMN,N,,N,N,,,Indicates class of the pharmacy.,,,
+PHARMACY_CLASS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the pharmacy class. ,,,
+NDC_QUALIFY_CD,VARCHAR(50),COLUMN,N,,N,N,,,ID of the product dispensed or service provided.,,,
+NDC_QUALIFY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the product dispensed or service provided.,,,
+PRESCRIBE_ID_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code qualifying the type of Prescriber ID.,,,
+PRESCRIBE_ID_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Text description of the type of Prescriber ID submitted.,,,
+PRESCRIBE_CERTIFICATION_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates a providers certification in the health plan program.,,,
+NCPDP_SERVICE_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,The reference number assigned by the provider for the dispensed drug/product and/or service provided.,,,
+NCPDP_SERVICE_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the dispensed drug/product and/or service provided.,,,
+NCPDP_DOSAGE_FORM_CD,VARCHAR(50),COLUMN,N,,N,N,,,Dosage form code for product identified.,,,
+NCPDP_DOSAGE_FORM_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,,,,
+NCPDP_PRIOR_AUTH_TYPE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code clarifying the Prior Authorization Number Submitted or benefit/plan exemption.,,,
+NCPDP_PRIOR_AUTH_TYPE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the Prior Authorization Submitted or benefit/plan exemption.,,,
+NCPDP_PRIOR_AUTH_REASON_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code clarifying the Prior Authorization Number.,,,
+NCPDP_PRIOR_AUTH_REASON_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,,,,
+NCPDP_PRICE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code identifying how the reimbursement amount was calculated by the pharmacy for Ingredient Cost Paid.,,,
+NCPDP_PRICE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The description of the pricing method used by the pharmacy. ,,,
+NCPDP_INGREDIENT_COST_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Submitted product component cost of the dispensed prescription. This amount is included in the Gross Amount Due.,,,
+NCPDP_GENERIC_PRICE_CD,VARCHAR(50),COLUMN,N,,N,N,,,"Distinguishes if product priced as Generic or Branded product, as defined by processor.",,,
+NCPDP_GENERIC_PRICE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,"Description of the generic or branded product pricing method,",,,
+NCPDP_DISPENSE_FEE_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Amount to be collected from the patient that is included in Patient Pay Amount (5?5-F5) that is due to the processing fee imposed by the processor.,,,
+DRUG_FORMULA_STATUS_CD,VARCHAR(50),COLUMN,N,,N,N,,,Status of the drug within the  formulary.,,,
+DRUG_FORMULA_STATUS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the status of the drug within the formulary.,,,
+NCPDP_INJURY_DT,DATE,COLUMN,Y,,N,N,,,Date on which the injury occurred.,,,
+ROUTE_OF_ADMIN_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code for the route of administration of the complete compound mixture or override to the default route referenced for the product.,,,
+ROUTE_OF_ADMIN_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the route of administration for the drug/compound. ,,,
+NCPDP_CLAIM_VERSION_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code uniquely identifying the transmission syntax and corresponding Data Dictionary.,,,
+NCPDP_CLAIM_VERSION_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Description of the NCPDP Claim Version Code.,,,
+PRESCRIPTION_ORIGIN_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code indicating the origin of the prescription.,,,
+PRESCRIPTION_ORIGIN_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The descriptive text indicating where the prescription originated from.,,,
+NCPDP_DISPENSE_DT,DATE,COLUMN,Y,,N,N,,,"Date the prescription was filled.
+",,,
+NCPDP_CLAIM_SEQUENCE_NBR,"NUMBER(38,0)",COLUMN,Y,,N,N,,,Indicates the sequence of this claim within the set of claims submitted.,,,
+REL_PRESCRIPTION_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,Related Prescription/Service Reference Number to which the service is associated.,,,
+REL_PRESCRIPTION_SERVICE_DT,DATE,COLUMN,Y,,N,N,,,Date of the Associated Prescription/Service Reference Number.,,,
+NCPDP_INGREDIENT_PAID_AMT,"NUMBER(30,7)",COLUMN,N,,N,N,,,Drug ingredient cost paid included in the Total Amount Paid.,,,
+NCPDP_COST_BASIS_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code indicating the method by which ingredient cost submitted is calculated based on client pricing.,,,
+NCPDP_COST_BASIS_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Describes the how the ingredient cost submitted.,,,
+NCPDP_ADJUSTED_CLAIM_ICN_NBR,VARCHAR(50),COLUMN,Y,,N,N,,,"For adjustments, ID associated with original claim.",,,
+NCPDP_FORMULA_IND,VARCHAR(1),COLUMN,N,,N,N,,,Indicates that client has a formulary.,,,
+CCS_SERVICE_PROCEDURE_CATEGORY_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,The system-generated identifier for a unique row in the CCS Service Procedure Category Dimension table.,,,
+SERVICE_PROCEDURE_CCS_CATEGORY_CD,VARCHAR(50),COLUMN,N,,N,N,,,The Clinical Classifications Software for Services and Procedures (CCS) Category Code assigned to a HCPCS/CPT procedure code. The CCS Software provides a method for classifying CPT and HCPCS Level II codes into clinically meaningful procedure categories.,,,
+SERVICE_PROCEDURE_CCS_CATEGORY_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,The text description for the CCS-Services and Procedures categories code.,,,
+SUD_IND,VARCHAR(16777216),COLUMN,Y,,N,N,,,Indicates the claim contains information related to Substance Use Disorder (SUD) diagnosis or treatment. This data is considered sensitive and is restricted from general access to only users authorized to view SUD data.,,,

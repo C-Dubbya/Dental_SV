@@ -1,0 +1,20 @@
+name,type,kind,null?,default,primary key,unique key,check,expression,comment,policy name,privacy domain,write default
+PROCEDURE_DIM_SK,"NUMBER(38,0)",COLUMN,N,,N,N,,,Unique identifier for the Procedure Dimension table. This identifies a unique record on the table.,,,
+DE_LOAD_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem Load Process Event Identifier for when the row was originally created.,,,
+DE_LOAD_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,Data Ecosystem Load Process Start Timestamp for when the Row was originally created.,,,
+DE_UPDT_EVENT_ID,"NUMBER(38,0)",COLUMN,N,,N,N,,,Data Ecosystem Load Process Timestamp for when the Row was updated.,,,
+DE_UPDT_TS,TIMESTAMP_NTZ(9),COLUMN,N,,N,N,,,"Data Ecosystem Load Timestamp - identifies when this row was created within the Data Ecosystem
+",,,
+DE_ROW_HD,VARCHAR(64),COLUMN,N,,N,N,,,Data Ecosystem Hash Difference Value: A hash of the columns within a row that can be compared to a version of the row to determine if the contents have changed.,,,
+DE_VERSION_HD,VARCHAR(64),COLUMN,N,,N,N,,,"Data Ecosystem Version Hash Difference Value: A hash of the columns within a row that can be compared to the current instance of the row to determine if a new version of a dimension is warranted(Type 2).
+When the Hash VERSION is different a new row is required(new VERSION) if only the Hash DIFF changes - than and Update (SCD type 1) is in order.",,,
+DE_CURRENT_ROW_IND,VARCHAR(1),COLUMN,N,,N,N,,,"Data Ecosystem Current Row Indicator indicates that the associated row is the only �current� row for the given business key. There can be only one record with the ""Y"" (yes) value for the Current Record Indicator for a given business or natural key within the record. ",,,
+DE_DELETE_IND,VARCHAR(1),COLUMN,N,,N,N,,,Data Ecosystem Delete Indicator indicates if the row should be treated as a deleted row within Data Ecosystem.  Row is retained for audit purposes.,,,
+DE_ROW_BEGIN_DT,DATE,COLUMN,N,,N,N,,,Data Ecosystem Row Begin Date indicates the date a row became active within the Data Ecosystem.,,,
+DE_ROW_END_DT,DATE,COLUMN,N,,N,N,,,Data Ecosystem Row End Date indicates the date a row became inactive within the Data Ecosystem.,,,
+CD_SET_NM,VARCHAR(50),COLUMN,N,,N,N,,,"Code to identify a coding scheme from which the procedure code originated.  Valid values are ICD, HCPCS
+",,,
+PROCEDURE_CD,VARCHAR(50),COLUMN,N,,N,N,,,Code to identify a healthcare service or treatment.,,,
+PROCEDURE_DESC,VARCHAR(1000),COLUMN,N,,N,N,,,Textual description associated with a procedure.,,,
+PROCEDURE_LONG_DESC,VARCHAR(4000),COLUMN,N,,N,N,,,Detailed textual description associated with a procedure.,,,
+SOURCE_ASSIGN_PROCEDURE_ID,VARCHAR(50),COLUMN,Y,,N,N,,,Source system assigned key.  This a unique identifier as assigned by the Adjudication System (MMIS). ,,,
